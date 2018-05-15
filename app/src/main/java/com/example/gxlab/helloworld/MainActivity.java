@@ -13,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import android.util.Log;
+
+import org.opencv.android.OpenCVLoader;
+
 /**
  * An {@link Activity} showing a tuggable "Hello World!" card.
  * <p>
@@ -24,6 +28,16 @@ import android.widget.AdapterView;
  * @see <a href="https://developers.google.com/glass/develop/gdk/touch">GDK Developer Guide</a>
  */
 public class MainActivity extends Activity {
+
+    private static final String TAG="MainActivity";
+
+    static {
+        if (OpenCVLoader.initDebug()){
+            Log.d(TAG, "OpenCV successfully loaded");
+        } else {
+            Log.d(TAG, "OpenCV not Loaded");
+        }
+    }
 
     /**
      * {@link CardScrollView} to use as the main content view.
