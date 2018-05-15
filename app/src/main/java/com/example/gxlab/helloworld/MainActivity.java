@@ -29,6 +29,7 @@ import org.opencv.android.OpenCVLoader;
  */
 public class MainActivity extends Activity {
 
+    // Not important
     private static final String TAG="MainActivity";
 
     static {
