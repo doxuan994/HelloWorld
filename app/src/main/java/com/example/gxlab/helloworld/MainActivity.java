@@ -13,9 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import android.util.Log;
 
-import org.opencv.android.OpenCVLoader;
+import com.google.android.glass.view.WindowUtils;
+
+
+
+import android.view.Window;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.GestureDetector;
+import android.view.WindowManager;
 
 /**
  * An {@link Activity} showing a tuggable "Hello World!" card.
@@ -29,17 +36,6 @@ import org.opencv.android.OpenCVLoader;
  */
 public class MainActivity extends Activity {
 
-    // Not important
-    private static final String TAG="MainActivity";
-
-    static {
-        if (OpenCVLoader.initDebug()){
-            Log.d(TAG, "OpenCV successfully loaded");
-        } else {
-            Log.d(TAG, "OpenCV not Loaded");
-        }
-    }
-
     /**
      * {@link CardScrollView} to use as the main content view.
      */
@@ -50,9 +46,19 @@ public class MainActivity extends Activity {
      */
     private View mView;
 
+    private GestureDetector mGestureDetector;
+
     @Override
     protected void onCreate(Bundle bundle) {
+
+
         super.onCreate(bundle);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+
+        // This code will create the Ok Glass in every screens and it will WORK.
+        getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);
+
 
         mView = buildView();
 
@@ -80,6 +86,7 @@ public class MainActivity extends Activity {
                 }
                 return AdapterView.INVALID_POSITION;
             }
+
         });
         // Handle the TAP event.
         mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -90,8 +97,44 @@ public class MainActivity extends Activity {
                 am.playSoundEffect(Sounds.DISALLOWED);
             }
         });
+
+//        mGestureDetector = createGestureDetector(this);
         setContentView(mCardScroller);
     }
+
+
+
+    @Override
+    public boolean onCreatePanelMenu(int featureId, Menu menu){
+        if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS || featureId ==  Window.FEATURE_OPTIONS_PANEL) {
+            getMenuInflater().inflate(R.menu.main, menu);
+            return true;
+        }
+        return super.onCreatePanelMenu(featureId, menu);
+    }
+
+    public void findDevelopers(String platform){
+    }
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS || featureId ==  Window.FEATURE_OPTIONS_PANEL) {
+            switch (item.getItemId()) {
+                case R.id.find_android:
+                    findDevelopers("Android");
+                    break;
+                case R.id.find_javascript:
+                    findDevelopers("Java Script");
+                    break;
+                case R.id.find_ios:
+                    findDevelopers("iOS");
+                    break;
+            }
+            return true;
+        }
+        return super.onMenuItemSelected(featureId, item);
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -111,8 +154,15 @@ public class MainActivity extends Activity {
     private View buildView() {
         CardBuilder card = new CardBuilder(this, CardBuilder.Layout.TEXT);
 
-        card.setText(R.string.hello_world);
+//        card.setText(R.string.hello_world);
+//        return card.getView();
+
+
+        card.setText(R.string.app_name);
+
         return card.getView();
+
+
     }
 
 }
