@@ -72,7 +72,7 @@ public class ResultsActivity extends Activity {
 
     private void findDevelopers(String platform){
         for (int i=1; i<=10; i++){
-//            CardBuilder card = new CardBuilder(this, CardBuilder.Layout.TEXT);
+            // CardBuilder card = new CardBuilder(this, CardBuilder.Layout.TEXT);
 
             // The CardBuilder.Layout.COLUMNS layout shows an image mosaic or
             // icon on the left side of the card and text on the right side.
