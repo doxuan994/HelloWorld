@@ -1,3 +1,5 @@
+package com.example.gxlab.helloworld;
+
 import java.io.Serializable;
 
 public class DeveloperModel implements Serializable {

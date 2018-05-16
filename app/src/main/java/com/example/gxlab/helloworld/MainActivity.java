@@ -8,6 +8,8 @@ import com.google.android.glass.view.WindowUtils;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 
+import android.content.Intent;
+
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
@@ -169,6 +171,9 @@ public class MainActivity extends Activity {
     }
 
     public void findDevelopers(String platform){
+        Intent resultsIntent = new Intent(this, ResultsActivity.class);
+        resultsIntent.putExtra(ResultsActivity.SEARCH, platform);
+        startActivity(resultsIntent);
     }
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
